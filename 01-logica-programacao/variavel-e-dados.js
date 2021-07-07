@@ -14,10 +14,13 @@ const casado = true;
 const bornDate = new Date(1996, 1, 19);
 const cidades = ["Palmares", "Recife"]; // Array
 const faculdade = {
-    nome: "POLI",
-    cidade: "Recife",
-    "cidade-sede": "Recife"
-}
+  estado: {
+    uf: "PE",
+    nome: "Pernambuco",
+  },
+  nome: "POLI",
+  cidade: "Recife",
+};
 
 let recifeEstaChovendo = undefined;
 
