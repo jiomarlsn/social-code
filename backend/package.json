@@ -1,0 +1,25 @@
+{
+  "name": "socialcode-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qualiti-learning/social-code.git"
+  },
+  "author": "Keven Leone",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qualiti-learning/social-code/issues"
+  },
+  "homepage": "https://github.com/qualiti-learning/social-code#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
