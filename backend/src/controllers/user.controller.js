@@ -1,58 +1,45 @@
-const database = require("../config/database");
-
 let users = [];
 
+const UserModel = require("../model/user.model");
+
 class UserController {
-  store(req, res) {
-    const user = {
-      ...req.body,
-      id: users.length + 1,
-      reg_date: new Date().toISOString(),
-    };
-
-    users = [...users, user];
-
-    res.send(user);
+  constructor() {
+    this.userModel = new UserModel();
   }
 
-  getAll(req, res) {
-    database.query(
-      `SELECT U.*, NA.name as nivel_acesso FROM USER U
-       JOIN NIVEL_ACESSO NA on U.nivel_acesso_id = NA.id`,
-      function (error, results, fields) {
-        if (error) throw error;
-        console.log("All users:", results);
-      }
-    );
+  async store(req, res) {
+    try {
+      const result = await this.userModel.createUser(req.body);
 
-    res.send(users);
+      res.send(result);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  }
+
+  async getAll(req, res) {
+    try {
+      const users = await this.userModel.getAllUsers();
+
+      res.send(users);
+    } catch (err) {
+      res.status(400).send(err);
+    }
   }
 
   getOne(req, res) {
     const id = Number(req.params.id);
 
-    const user = users.find((user) => {
-      if (user.id === id) {
-        return user;
-      }
-    });
+    // Buscar por ID XXX
 
-    res.send({ user });
+    res.send({ user: {} });
   }
 
   update(req, res) {
     const id = Number(req.params.id);
     const body = req.body;
 
-    users = users.map((user) => {
-      if (user.id === id) {
-        const { firstname, lastname, email } = body;
-
-        return { ...user, firstname, lastname, email };
-      }
-
-      return user;
-    });
+    // Atualizar usuário de ID X por dados Y
 
     res.send({ id, users });
   }
@@ -60,9 +47,7 @@ class UserController {
   remove(req, res) {
     const id = Number(req.params.id);
 
-    users = users.filter((user) => {
-      return user.id !== id;
-    });
+    // Remover usuário de ID X
 
     res.send({ message: "Usuário removido" });
   }
