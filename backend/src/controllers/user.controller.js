@@ -27,29 +27,41 @@ class UserController {
     }
   }
 
-  getOne(req, res) {
+  async getOne(req, res) {
     const id = Number(req.params.id);
 
-    // Buscar por ID XXX
+    const user = await this.userModel.getOneUser(id);
 
-    res.send({ user: {} });
+    if (!user) {
+      return res.status(404).send({ message: "Usuário não encontrado" });
+    }
+
+    res.send({ user });
   }
 
-  update(req, res) {
+  async update(req, res) {
     const id = Number(req.params.id);
     const body = req.body;
 
-    // Atualizar usuário de ID X por dados Y
+    const response = await this.userModel.updateUser(id, body);
 
-    res.send({ id, users });
+    res.send({ response });
   }
 
-  remove(req, res) {
-    const id = Number(req.params.id);
+  async remove(req, res) {
+    const id = req.params.id;
 
-    // Remover usuário de ID X
+    if (Number.isNaN(id)) {
+      return res.status(404).send({ message: "Sai fora SQL Injenction" });
+    }
 
-    res.send({ message: "Usuário removido" });
+    const response = await this.userModel.removeUser(id);
+
+    if (response[0].affectedRows === 0) {
+      return res.status(404).send({ message: "Usuário não encontrado" });
+    }
+
+    res.send(response);
   }
 }
 

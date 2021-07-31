@@ -19,11 +19,31 @@ class UserModel {
     return result;
   }
 
-  updateUser() {}
+  async updateUser(id, data) {
+    const result = await connection.promise().query(
+      `UPDATE USER
+       SET firstname = "${data.firstname}", lastname = "${data.lastname}", email = "${data.email}", nivel_acesso_id = ${data.nivel_acesso_id}
+       WHERE id = ${id}`
+    );
 
-  removeUser() {}
+    return result;
+  }
 
-  getOneUser() {}
+  async removeUser(id) {
+    const result = await connection
+      .promise()
+      .query(`DELETE FROM USER WHERE id = ${id};`);
+
+    return result;
+  }
+
+  async getOneUser(id) {
+    const result = await connection
+      .promise()
+      .query(`SELECT * FROM USER WHERE id = ${id};`);
+
+    return result[0][0];
+  }
 }
 
 module.exports = UserModel;
