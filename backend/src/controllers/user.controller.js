@@ -1,15 +1,9 @@
-let users = [];
-
 const UserModel = require("../model/user.model");
 
 class UserController {
-  constructor() {
-    this.userModel = new UserModel();
-  }
-
   async store(req, res) {
     try {
-      const result = await this.userModel.createUser(req.body);
+      const result = await UserModel.create(req.body);
 
       res.send(result);
     } catch (error) {
@@ -19,7 +13,7 @@ class UserController {
 
   async getAll(req, res) {
     try {
-      const users = await this.userModel.getAllUsers();
+      const users = await UserModel.findAll();
 
       res.send(users);
     } catch (err) {
@@ -30,7 +24,7 @@ class UserController {
   async getOne(req, res) {
     const id = Number(req.params.id);
 
-    const user = await this.userModel.getOneUser(id);
+    const user = await UserModel.findByPk(id);
 
     if (!user) {
       return res.status(404).send({ message: "Usuário não encontrado" });
@@ -43,7 +37,7 @@ class UserController {
     const id = Number(req.params.id);
     const body = req.body;
 
-    const response = await this.userModel.updateUser(id, body);
+    const response = await UserModel.update(body, { where: { id } });
 
     res.send({ response });
   }
@@ -51,17 +45,13 @@ class UserController {
   async remove(req, res) {
     const id = req.params.id;
 
-    if (Number.isNaN(id)) {
-      return res.status(404).send({ message: "Sai fora SQL Injenction" });
-    }
+    const response = await UserModel.destroy({ where: { id } });
 
-    const response = await this.userModel.removeUser(id);
-
-    if (response[0].affectedRows === 0) {
+    if (response === 0) {
       return res.status(404).send({ message: "Usuário não encontrado" });
     }
 
-    res.send(response);
+    res.send({ message: "Usuário Removido" });
   }
 }
 
