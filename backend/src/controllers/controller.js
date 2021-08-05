@@ -1,5 +1,7 @@
-class Controller {
+const BaseController = require("./base.controller");
+class Controller extends BaseController {
   constructor(model) {
+    super();
     this.model = model;
   }
 
@@ -9,7 +11,7 @@ class Controller {
 
       res.send({ data: result });
     } catch (error) {
-      res.status(400).send(error);
+      this.sendErrorResponse(res, error);
     }
   }
 
@@ -19,41 +21,53 @@ class Controller {
 
       res.send({ data: result });
     } catch (err) {
-      res.status(400).send(err);
+      this.sendErrorResponse(res, error);
     }
   }
 
   async getOne(req, res) {
-    const id = Number(req.params.id);
+    try {
+      const id = Number(req.params.id);
 
-    const result = await this.model.findByPk(id);
+      const result = await this.model.findByPk(id);
 
-    if (!result) {
-      return res.status(404).send({ message: "Registro não encontrado" });
+      if (!result) {
+        return res.status(404).send({ message: "Registro não encontrado" });
+      }
+
+      res.send({ data: result });
+    } catch (error) {
+      this.sendErrorResponse(res, error);
     }
-
-    res.send({ data: result });
   }
 
   async update(req, res) {
-    const id = Number(req.params.id);
-    const body = req.body;
+    try {
+      const id = Number(req.params.id);
+      const body = req.body;
 
-    const result = await this.model.update(body, { where: { id } });
+      const result = await this.model.update(body, { where: { id } });
 
-    res.send({ data: result });
+      res.send({ data: result });
+    } catch (error) {
+      this.sendErrorResponse(res, error);
+    }
   }
 
   async remove(req, res) {
-    const id = req.params.id;
+    try {
+      const id = req.params.id;
 
-    const result = await this.model.destroy({ where: { id } });
+      const result = await this.model.destroy({ where: { id } });
 
-    if (result === 0) {
-      return res.status(404).send({ message: "Registro não encontrado" });
+      if (result === 0) {
+        return res.status(404).send({ message: "Registro não encontrado" });
+      }
+
+      res.send({ message: "Registro Removido" });
+    } catch (error) {
+      this.sendErrorResponse(res, error);
     }
-
-    res.send({ message: "Registro Removido" });
   }
 }
 
