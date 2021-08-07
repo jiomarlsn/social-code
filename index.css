@@ -1,0 +1,22 @@
+h1 {
+  font-size: 15px;
+  color: brown;
+}
+
+address {
+  margin-left: 20px;
+  font-size: 40px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #123892;
+}
+
+.section_principal {
+  background-color: violet;
+  margin: 20px;
+  padding: 20px;
+}
+
+#texto-principal {
+  color: #df5e2f;
+}
