@@ -14,6 +14,9 @@ const User = sequelize.define(
     email: {
       type: DataTypes.STRING,
     },
+    password: {
+      type: DataTypes.STRING,
+    },
   },
   {
     underscored: true,

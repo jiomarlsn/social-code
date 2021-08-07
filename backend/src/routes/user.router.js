@@ -6,6 +6,7 @@ const Router = express.Router();
 
 const controller = new UserController();
 
+Router.post("/auth", (req, res) => controller.auth(req, res));
 Router.get("/user/:id", (req, res) => controller.getOne(req, res));
 Router.get("/user", (req, res) => controller.getAll(req, res));
 Router.post("/user", (req, res) => controller.store(req, res));
