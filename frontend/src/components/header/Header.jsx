@@ -1,14 +1,44 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
+import { useRouter } from "next/router";
+
+const routers = [
+  {
+    path: "/actor",
+    name: "Actors",
+  },
+  {
+    path: "/category",
+    name: "Categories",
+  },
+  {
+    path: "/film",
+    name: "Films",
+  },
+  {
+    path: "/oscar",
+    name: "Oscar",
+    disabled: true,
+  },
+];
 
 const Header = () => {
+  const router = useRouter();
+
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+        <Navbar.Brand onClick={() => router.push("/")}>SocialCode</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          {routers.map((routerInfo) => (
+            <Nav.Link
+              active={router.pathname === routerInfo.path}
+              disabled={routerInfo.disabled}
+              key={routerInfo.path}
+              onClick={() => router.push(routerInfo.path)}
+            >
+              {routerInfo.name}
+            </Nav.Link>
+          ))}
         </Nav>
       </Container>
     </Navbar>

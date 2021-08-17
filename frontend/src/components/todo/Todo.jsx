@@ -1,7 +1,7 @@
 import { Button, FormLabel, FormControl } from "react-bootstrap";
 import { useState } from "react";
 
-const Todo = (props) => {
+const Todo = ({ children, title }) => {
   const [name, setName] = useState("");
   const [todos, setTodos] = useState([]);
 
@@ -13,9 +13,9 @@ const Todo = (props) => {
 
   return (
     <div className="container mt-4">
-      <h1>{props.title}</h1>
+      <h1>{title}</h1>
 
-      {props.children}
+      {children}
 
       <div className="mb-3">
         <FormLabel>O que gostaria de fazer hoje ?</FormLabel>

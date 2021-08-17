@@ -5,7 +5,7 @@ const publicRoutes = ["/", "/api/auth"];
 const AuthMiddleware = (req, res, next) => {
   const { authorization } = req.headers;
 
-  if (publicRoutes.includes(req.url)) {
+  if (!process.env.AUTH_MIDDLEWARE_ENABLED || publicRoutes.includes(req.url)) {
     return next();
   }
 

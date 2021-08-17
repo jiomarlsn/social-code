@@ -5,7 +5,7 @@ import Todo from "../components/todo/Todo";
 const Homepage = () => {
   return (
     <div>
-      <Todo title="Lista de atividades - Segunda">
+      <Todo subtitle="Teste testee..." title="Lista de atividades - Segunda">
         <Alert variant="success">
           Não esqueça de informar suas atividades, aqui!
         </Alert>
